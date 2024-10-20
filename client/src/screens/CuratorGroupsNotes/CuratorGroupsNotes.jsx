@@ -17,7 +17,7 @@ const CuratorGroupsNotes = () => {
     fetchGroups();
   }, []);
   return (
-    <div className="curatorGroups">
+    <div className="curatorGroups"> 
       <div className="curatorGroups__container">
         <h1 className="groups__title">Вложения группы:</h1>
         <div className="groups__list">

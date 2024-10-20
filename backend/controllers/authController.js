@@ -1,4 +1,4 @@
-const { User, Role } = require("../models/models");
+const { User, Role, UserGroup } = require("../models/models");
 const bcrypt = require("bcryptjs");
 const { validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
@@ -65,6 +65,11 @@ class authController {
       // if (password !== user.password) {
       //   return res.status(400).json({ message: "Неверный пароль" });
       // }
+      const groups = await UserGroup.findAll({
+        where: {
+          userId: req.user.id,
+        },
+      });
       const token = generateAccessToken(user.id);
       return res.json({
         token,
@@ -75,6 +80,7 @@ class authController {
           password: user.password,
           role: user.role,
           groupId: user.groupId,
+          groups: groups,
         },
       });
     } catch (e) {}
@@ -142,6 +148,12 @@ class authController {
 
   async auth(req, res) {
     try {
+      const groups = await UserGroup.findAll({
+        where: {
+          userId: req.user.id,
+        },
+      });
+      const groupIds = groups.map((group) => group.groupId);
       const user = await User.findOne({ where: { id: req.user.id } });
       const token = generateAccessToken(user.id);
       return res.json({
@@ -153,6 +165,7 @@ class authController {
           password: user.password,
           role: user.role,
           groupId: user.groupId,
+          groups: groupIds,
         },
       });
     } catch (e) {

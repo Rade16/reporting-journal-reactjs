@@ -14,7 +14,7 @@ const StudentsList = () => {
         setStudents(response.data);
       } catch (error) {
         console.error(error);
-      }
+      } 
     };
 
     fetchStudents();

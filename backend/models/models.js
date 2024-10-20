@@ -6,7 +6,7 @@ const User = sequelize.define("user", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   name: { type: DataTypes.STRING },
   role: { type: DataTypes.STRING },
-  groupId: { type: DataTypes.INTEGER },
+  // groupId: { type: DataTypes.INTEGER },
   login: { type: DataTypes.STRING },
   password: { type: DataTypes.STRING },
 });
@@ -64,8 +64,12 @@ const Student = sequelize.define("student", {
   groupId: { type: DataTypes.INTEGER },
   role: { type: DataTypes.STRING },
 });
+const UserGroup = sequelize.define("user_group", {
+  userId: { type: DataTypes.INTEGER, references: { model: User, key: "id" } },
+  groupId: { type: DataTypes.INTEGER, references: { model: Group, key: "id" } },
+});
 
-User.belongsTo(Group, { foreignKey: "groupId" });
+// User.belongsTo(Group, { foreignKey: "groupId" });
 User.hasOne(Role, { through: "UserRoles", as: "roles" });
 Role.belongsToMany(User, { through: "UserRoles", as: "users" });
 Note.belongsTo(Group, { foreignKey: "groupId" });
@@ -76,7 +80,9 @@ Group.hasMany(Note, {
   onDelete: "cascade",
   hooks: true,
 });
-Group.hasMany(User, { foreignKey: "groupId" });
+// Group.hasMany(User, { foreignKey: "groupId" });
 Group.hasMany(Schedule, { foreignKey: "groupId" });
 Group.hasMany(Student, { foreignKey: "groupId" });
-module.exports = { User, Role, Note, Group, Schedule, Student };
+User.belongsToMany(Group, { through: UserGroup, foreignKey: "userId" });
+Group.belongsToMany(User, { through: UserGroup, foreignKey: "groupId" });
+module.exports = { User, Role, Note, Group, Schedule, Student, UserGroup };

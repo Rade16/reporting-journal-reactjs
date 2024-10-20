@@ -28,6 +28,7 @@ class StudentController {
       },
       { where: { id: req.params.id } }
     );
+    return res.json(student);
   }
 }
 

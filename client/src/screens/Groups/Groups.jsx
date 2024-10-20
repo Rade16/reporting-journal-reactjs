@@ -3,6 +3,7 @@ import "./groups.scss";
 import GroupCard from "../../components/GroupCard/GroupCard";
 import add from "./../../assets/Groups/Add.svg";
 import axios from "axios";
+import { store } from "../../reducers";
 const Groups = () => {
   const [groups, setGroups] = useState([]);
 

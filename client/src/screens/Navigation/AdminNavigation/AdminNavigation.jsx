@@ -47,7 +47,7 @@ const AdminNavigation = () => {
                   </p>
                   <p className="navigation__user-role">
                     {store.getState().user.currentUser.role}
-                  </p>
+                  </p>  
                   {/* <div className="navigation__user-buttons">
                   <img
                     className="navigation__user-button-exit"

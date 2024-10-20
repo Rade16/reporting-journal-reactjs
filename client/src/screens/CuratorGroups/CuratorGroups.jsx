@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./curatorGroups.scss";
 import GroupCard from "../../components/GroupCard/GroupCard";
 import axios from "axios";
+import { store } from "../../reducers";
 const CuratorGroups = () => {
   const [groups, setGroups] = useState([]);
   useEffect(() => {
@@ -21,7 +22,15 @@ const CuratorGroups = () => {
       <div className="curatorGroups__container">
         <div className="groups__list">
           {groups.map((obj) => {
-            return <GroupCard name={obj.name} key={obj.id} id={obj.id} />;
+            for (
+              let i = 0;
+              i < store.getState().user.currentUser.groups.length;
+              i++
+            ) {
+              if (obj.id == store.getState().user.currentUser.groups[i]) {
+                return <GroupCard name={obj.name} key={obj.id} id={obj.id} />;
+              }
+            }
           })}
         </div>
       </div>

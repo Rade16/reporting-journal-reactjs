@@ -48,10 +48,7 @@ const ScreenSwitchboard = () => {
             path="/CuratorGroupsStudentsList"
             element={<CuratorGroupsStudentsList />}
           />
-          <Route
-            path="/AdminPanel"
-            element={<AdminPanel />}
-          />
+          <Route path="/AdminPanel" element={<AdminPanel />} />
         </Routes>
       )}
     </>
